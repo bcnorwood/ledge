@@ -1,0 +1,29 @@
+{
+    "name": "bcnorwood/ledge",
+    "description": "Simple, flexible RESTful API for user management built with Symfony.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brian Norwood",
+            "email": "briancnorwood@gmail.com"
+        }
+    ],
+    "scripts": {
+        "build": [
+            "@stop",
+            "@purge",
+            "docker-compose build",
+            "@start",
+            "@schema"
+        ],
+        "schema": "docker-compose exec api bin/console doctrine:schema:create",
+        "start": "docker-compose up -d",
+        "stop": "docker-compose down",
+        "purge": [
+            "docker container prune --force",
+            "docker image prune --force",
+            "docker volume prune --force"
+        ]
+    }
+}

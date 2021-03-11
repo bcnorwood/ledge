@@ -1,0 +1,9 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Ledge
+            description: Ledge is a simple, RESTful API for user management built with Symfony.
+            version: 1.0.0
+    areas:
+        path_patterns:
+            - ^/users

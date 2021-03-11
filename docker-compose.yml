@@ -1,0 +1,37 @@
+version: '3'
+services:
+  www:
+    image: nginx:alpine
+    depends_on:
+      - api
+    volumes:
+     - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+     - assets:/var/www/bundles
+    ports:
+    - '22592:80'
+    environment:
+    - APP_ROOT
+  api:
+    build: .
+    depends_on:
+      - db
+    volumes:
+      - assets:${APP_ROOT}/public/bundles
+    environment:
+      APP_ENV:
+      APP_DEBUG:
+      APP_SECRET:
+      DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}
+  db:
+    image: mariadb
+    volumes:
+    - data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE:
+      MYSQL_USER:
+      MYSQL_PASSWORD:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+
+volumes:
+  assets:
+  data:

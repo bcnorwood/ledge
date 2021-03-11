@@ -1,0 +1,15 @@
+server {
+  listen 80;
+
+  location /bundles {
+  	root /var/www;
+  	add_header x-uri $uri always;
+    try_files $uri =404;
+  }
+
+  location / {
+    fastcgi_pass  api:9000;
+    include       fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME ${APP_ROOT}/public/index.php/$fastcgi_script_name;
+  }
+}
